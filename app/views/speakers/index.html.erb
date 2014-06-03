@@ -1,0 +1,12 @@
+<div class="container" role="main">
+  <h1>Speakers</h1>
+  <ul>
+    <% @speakers.each do |speaker| %>
+      <li><a href='/speakers/<%=speaker.uid%>'><%=speaker.name %></a> (<%=speaker.volume%>)</li>
+    <% end %>
+  </ul>
+
+  <%=form_tag(rescan_speakers_path, method: :post) do %>
+    <%=submit_tag 'Rescan' %>
+  <% end %>
+</div>

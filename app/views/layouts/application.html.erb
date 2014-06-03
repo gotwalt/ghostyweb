@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ghosty</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+</head>
+<body role="document">
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Ghosty</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><%=link_to 'Speakers', speakers_path %></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container theme-showcase" role="main" style="margin-top: 60px">
+  <%= yield %>
+</div>
+
+<%= javascript_include_tag('application') %>
+<%= yield(:scripts) %>
+
+</body>
+</html>

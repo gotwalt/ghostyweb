@@ -1,0 +1,5 @@
+<h1><%=@speaker.name %></h1>
+<%=form_tag(play_speaker_path(@speaker.uid), method: :post) do %>
+  <%=select_tag(:sound, options_for_select(@sounds)) %>
+  <%=submit_tag 'Play' %>
+<% end %>
