@@ -1,9 +1,9 @@
-== Requirements
+## Requirements
 
 * Ruby 2.0.0-p353
 * avahi redis sqlite3
 
-= Avahi Configuration
+### Avahi Configuration
 ```xml
 <service-group>
   <name replace-wildcards="yes">Ghosty</name>
