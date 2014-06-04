@@ -7,6 +7,8 @@ gem 'rails', '4.1'
 
 gem 'sqlite3'
 
+gem 'dalli'
+
 gem 'rack-timeout'
 # Unicorny web server
 gem 'unicorn'

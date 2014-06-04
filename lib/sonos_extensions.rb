@@ -3,10 +3,14 @@ require 'sonos'
 module Sonos::Endpoint::AVTransport
 
   def voiceover!(uri, vol = nil)
-    group_master.with_isolated_state do
+    start_time = Time.now
+
+    result = group_master.with_isolated_state do
       self.volume = vol if vol
       group_master.play_blocking(uri)
     end
+
+    result.merge({duration: (Time.now - start_time )})
   end
 
   protected
@@ -36,6 +40,11 @@ module Sonos::Endpoint::AVTransport
     end
 
     play if was_playing
+
+    {
+      original_volume: previous_volume,
+      original_state: (was_playing ? 'playing' : 'paused')
+    }
   end
 
   def play_blocking(uri)

@@ -53,6 +53,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    dalli (2.6.4)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -165,6 +166,7 @@ PLATFORMS
 DEPENDENCIES
   backbone-on-rails
   bootstrap-sass
+  dalli
   jquery-rails
   rack-timeout
   rails (= 4.1)
