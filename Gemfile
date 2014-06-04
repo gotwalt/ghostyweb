@@ -7,8 +7,6 @@ gem 'rails', '4.1'
 
 gem 'sqlite3'
 
-gem 'dalli'
-
 gem 'rack-timeout'
 # Unicorny web server
 gem 'unicorn'
@@ -22,4 +20,8 @@ gem 'bootstrap-sass'
 
 gem 'sonos'
 
-gem 'sucker_punch'
+gem 'sidekiq'
+gem 'sinatra'
+
+gem 'foreman'
+gem 'foreman-export-initd', require: false

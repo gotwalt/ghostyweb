@@ -18,7 +18,7 @@ class SpeakersController < ApplicationController
     speaker = system.speakers.find{|speaker| speaker.uid == params[:id] }
     sound = params[:sound] || 'scary'
 
-    GhostWorker.new.async.perform(speaker: speaker.uid, sound: sound)
+    GhostWorker.perform_async(speaker: speaker.uid, sound: sound)
 
     redirect_to speaker_path(speaker.uid)
   end

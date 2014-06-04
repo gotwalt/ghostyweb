@@ -1,24 +1,23 @@
-require 'sucker_punch'
 require 'sonos_extensions.rb'
 
 class GhostWorker
-  include SuckerPunch::Job
+  include Sidekiq::Worker
 
   attr_reader :system
 
   def perform(options = {})
 
-    speaker = if options[:speaker]
-      system.speakers.find{|speaker| speaker.uid == options[:speaker] }
+    speaker = if options['speaker']
+      system.speakers.find{|speaker| speaker.uid == options['speaker'] }
     else
       random_speaker
     end
 
-    volume = options[:volume] || (10 + rand(15))
+    volume = options['volume'] || 0 #(10 + rand(15))
 
     isolated_from_group(speaker) do |speaker|
       if speaker
-        track = random_track(options[:sound])
+        track = random_track(options['sound'])
         results = speaker.voiceover!(track, volume)
         Log.create(speaker_uid: speaker.uid, speaker_name: speaker.name, audio_uri: track, volume: volume, original_volume: results[:original_volume], duration: results[:duration], original_state: results[:original_state])
       end
@@ -77,7 +76,7 @@ class GhostWorker
   end
 
   def cache
-    @cache ||= Dalli::Client.new
+    @cache ||= Redis.new
   end
 
 end

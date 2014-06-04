@@ -1,26 +1,34 @@
-require 'sucker_punch'
-
 class GhostSchedulerWorker
-  include SuckerPunch::Job
-  MIN_FREQUENCY = 45
+  include Sidekiq::Worker
+  FREQUENCY = 1
 
-  def perform(*args)
-    wait = (MIN_FREQUENCY + rand(120)) * 0.5
-    cache.set 'ghosty.next', Time.now + wait
-
-    # wait
-    after(wait) do
-      cache.set 'ghosty.previous', Time.now
-      # do the work
-      GhostWorker.new.perform(sound: 'scary')
-      # restart the clock
-      GhostSchedulerWorker.new.async.perform()
-    end
-
+  def perform(scheduled_at)
+    scheduled_at = Time.parse(scheduled_at)
+    GhostWorker.new.perform('sound' => Rails.application.secrets.sound) unless scheduled_at < 5.minutes.ago # don't run old scheduled ones
+    GhostSchedulerWorker.schedule!
   end
 
-  def cache
-    @cache ||= Dalli::Client.new
+  def self.schedule!
+    clear_existing_jobs
+
+     wait = (FREQUENCY + rand(FREQUENCY * 2))
+     GhostSchedulerWorker.perform_in wait.minutes, Time.now + wait.minutes
+  end
+
+  def self.next_at
+    existing_jobs.first.try(:at)
+  end
+
+
+  def self.clear_existing_jobs
+    existing_jobs.map(&:delete)
+  end
+
+  def self.existing_jobs
+    delayed = Sidekiq::ScheduledSet.new
+    delayed.map do |job|
+      job if job.klass == 'GhostSchedulerWorker'
+    end.compact
   end
 
 end

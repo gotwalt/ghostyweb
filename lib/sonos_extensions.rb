@@ -13,12 +13,12 @@ module Sonos::Endpoint::AVTransport
     result.merge({duration: (Time.now - start_time )})
   end
 
-  protected
-
   def playing?
     state = get_player_state[:state]
     !['PAUSED_PLAYBACK', 'STOPPED'].include?(state)
   end
+
+  protected
 
   def with_isolated_state
     pause if was_playing = playing?
