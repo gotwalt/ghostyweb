@@ -1,7 +1,10 @@
 ## Requirements
 
 * Ruby 2.0.0-p353
-* avahi redis sqlite3
+* redis sqlite3
+
+## Delivery Version
+* avahi
 
 ### Avahi Configuration
 ```xml

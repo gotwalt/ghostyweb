@@ -5,7 +5,7 @@
   <tr><th>Time</th><th>Speaker</th><th>Volume</th><th>Track</th><th>Duration</th></tr>
   <% logs.each do |log| %>
     <tr>
-      <td><%=log.created_at %></td>
+      <td><%=log.created_at.localtime.to_formatted_s(:long) %></td>
       <td><%=link_to log.speaker_name, speaker_path(log.speaker_uid) %></td>
       <td><%=log.volume %> (<%=log.original_volume%>)</td>
       <td><%=log.audio_uri %></td>

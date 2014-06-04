@@ -1,3 +1,12 @@
+<p>
+  <% if Ghosty::Application.muted? %>
+    <%=button_to('Unmute', unmute_path)%>
+  <% else %>
+    <%=button_to('Mute', mute_path)%>
+  <% end %>
+</p>
+
 <p>Next ghost scheduled for <%=time_ago_in_words(GhostSchedulerWorker.next_at) %> from now.</p>
+
 
 <%= render partial: 'logs', object: @logs %>

@@ -13,5 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post :mute, to: 'welcome#mute'
+  post :unmute, to: 'welcome#unmute'
+
   root to: 'welcome#index'
 end

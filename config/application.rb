@@ -23,5 +23,21 @@ module Ghosty
     def self.system
       @system ||= Sonos::System.new
     end
+
+    def self.mute
+      cache.set 'ghosty.mute', true
+    end
+
+    def self.unmute
+      cache.del 'ghosty.mute'
+    end
+
+    def self.muted?
+      !cache.get('ghosty.mute').nil?
+    end
+
+    def self.cache
+      @cache || Redis.new
+    end
   end
 end

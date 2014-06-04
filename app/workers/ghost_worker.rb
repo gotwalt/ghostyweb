@@ -60,6 +60,8 @@ class GhostWorker
   def random_volume(speaker)
     current_volume = speaker.volume
 
+    return 0 if Ghosty::Application.muted?
+
     if current_volume > 0
       rand(current_volume) * 0.8
     else
