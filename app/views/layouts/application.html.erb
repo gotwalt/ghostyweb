@@ -14,14 +14,20 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
         <li><%=link_to 'Speakers', speakers_path %></li>
+        <li><%=link_to 'Sidekiq', '/sidekiq' %></li>
       </ul>
     </div>
   </div>
 </div>
 
 <div class="container theme-showcase" role="main" style="margin-top: 60px">
+  <%if flash[:info] %>
+    <p class='alert alert-success'><%=flash[:info] %></p>
+  <% end %>
+  <%if flash[:error] %>
+    <p class='alert alert-error'><%=flash[:error] %></p>
+  <% end %>
   <%= yield %>
 </div>
 

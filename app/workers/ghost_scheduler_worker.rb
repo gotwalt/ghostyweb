@@ -1,6 +1,6 @@
 class GhostSchedulerWorker
   include Sidekiq::Worker
-  FREQUENCY = 1
+  FREQUENCY = 45
 
   def perform(scheduled_at)
     scheduled_at = Time.parse(scheduled_at)

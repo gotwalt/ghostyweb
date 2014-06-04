@@ -12,6 +12,7 @@ class SpeakersController < ApplicationController
   def show
     @speaker = system.speakers.find{|speaker| speaker.uid == params[:id] }
     @sounds = Dir.glob(File.join(Rails.root, 'app', 'assets', 'audio', '**')).map{|t| File.basename(t) }
+    @logs = Log.where(speaker_uid: params[:id]).limit(50).order(:id).reverse_order
   end
 
   def play
@@ -19,6 +20,7 @@ class SpeakersController < ApplicationController
     sound = params[:sound] || 'scary'
 
     GhostWorker.perform_async(speaker: speaker.uid, sound: sound)
+    flash[:info] = "Playing on #{speaker.name}"
 
     redirect_to speaker_path(speaker.uid)
   end

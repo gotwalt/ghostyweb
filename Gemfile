@@ -22,6 +22,6 @@ gem 'sonos'
 
 gem 'sidekiq'
 gem 'sinatra'
+gem 'redis-mutex'
 
 gem 'foreman'
-gem 'foreman-export-initd', require: false

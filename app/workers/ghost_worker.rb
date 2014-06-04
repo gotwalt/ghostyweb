@@ -2,6 +2,7 @@ require 'sonos_extensions.rb'
 
 class GhostWorker
   include Sidekiq::Worker
+  sidekiq_options retry: false
 
   attr_reader :system
 
@@ -13,11 +14,15 @@ class GhostWorker
       random_speaker
     end
 
-    volume = options['volume'] || 0 #(10 + rand(15))
+    volume = options['volume'] || random_volume(speaker)
 
     isolated_from_group(speaker) do |speaker|
-      if speaker
-        track = random_track(options['sound'])
+      return unless speaker
+
+      track = random_track(options['sound'])
+
+      # prevent competition for the speaker
+      Redis::Mutex.with_lock(speaker.uid) do
         results = speaker.voiceover!(track, volume)
         Log.create(speaker_uid: speaker.uid, speaker_name: speaker.name, audio_uri: track, volume: volume, original_volume: results[:original_volume], duration: results[:duration], original_state: results[:original_state])
       end
@@ -44,12 +49,22 @@ class GhostWorker
 
   def random_speaker
     speaker = system.speakers.select do |speaker|
-      !speaker.playing? && speaker.uid != previous_uid
+      !speaker.playing? && speaker.uid != cache.get('ghosty.previous_uid')
     end.compact.sample
 
-    previous_uid = speaker.uid if speaker
+    cache.set('ghosty.previous_uid', speaker.uid) if speaker
 
     speaker
+  end
+
+  def random_volume(speaker)
+    current_volume = speaker.volume
+
+    if current_volume > 0
+      rand(current_volume) * 0.8
+    else
+      rand(15)
+    end
   end
 
   # Finds a file to play and returns it as a URI
@@ -61,14 +76,6 @@ class GhostWorker
       ip = Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.ip_address
       "http://#{ip}:#{Rails.application.secrets.port}/assets/#{sound}/" + File.basename(file)
     end
-  end
-
-  def previous_uid
-    cache.get 'ghosty.previous_uid'
-  end
-
-  def previous_uid=(val)
-    cache.set 'ghosty.previous_uid', val
   end
 
   def system

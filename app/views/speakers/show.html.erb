@@ -1,5 +1,10 @@
-<h1><%=@speaker.name %></h1>
+<h3><%=link_to('Speakers', speakers_path)%>: <%=@speaker.name %></h3>
+
+<div class='panel'>
 <%=form_tag(play_speaker_path(@speaker.uid), method: :post) do %>
   <%=select_tag(:sound, options_for_select(@sounds)) %>
   <%=submit_tag 'Play' %>
 <% end %>
+</div>
+
+<%= render partial: 'logs', object: @logs %>

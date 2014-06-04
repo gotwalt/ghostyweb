@@ -1,5 +1,5 @@
 <div class="container" role="main">
-  <h1>Speakers</h1>
+  <h3>Speakers</h3>
   <ul>
     <% @speakers.each do |speaker| %>
       <li><a href='/speakers/<%=speaker.uid%>'><%=speaker.name %></a> (<%=speaker.volume%>)</li>
