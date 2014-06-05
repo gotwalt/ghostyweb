@@ -1,7 +1,7 @@
 ## Requirements
 
 * Ruby 2.0.0-p353
-* redis sqlite3
+* redis libsqlite3-dev
 
 ## Delivery Version
 * avahi
