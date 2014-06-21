@@ -1,5 +1,3 @@
-require 'sonos_extensions.rb'
-
 class GhostWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
@@ -49,7 +47,7 @@ class GhostWorker
 
   def random_speaker
     speaker = system.speakers.select do |speaker|
-      !speaker.playing? && speaker.uid != cache.get('ghosty.previous_uid')
+      !speaker.is_playing? && speaker.uid != cache.get('ghosty.previous_uid')
     end.compact.sample
 
     cache.set('ghosty.previous_uid', speaker.uid) if speaker

@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/gotwalt/sonos.git
+  revision: 8bbdc5b9ab7834471aaac242e58ecb26cb9cf3b8
+  specs:
+    sonos (0.3.5)
+      httpclient
+      nokogiri
+      savon (~> 2.0)
+      thor
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -71,7 +81,7 @@ GEM
     gyoku (1.1.1)
       builder (>= 2.1.2)
     hike (1.2.3)
-    httpclient (2.3.4.1)
+    httpclient (2.4.0)
     httpi (2.1.0)
       rack
       rubyntlm (~> 0.3.2)
@@ -147,11 +157,6 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    sonos (0.3.5)
-      httpclient
-      nokogiri
-      savon (~> 2.0)
-      thor
     sprockets (2.12.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -196,6 +201,6 @@ DEPENDENCIES
   redis-mutex
   sidekiq
   sinatra
-  sonos
+  sonos!
   sqlite3
   unicorn

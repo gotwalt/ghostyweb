@@ -11,14 +11,13 @@ gem 'rack-timeout'
 # Unicorny web server
 gem 'unicorn'
 
-# Sigh, maybe a cdn someday. We use jquery-ujs on slugs page
 gem 'jquery-rails'
 
 gem 'backbone-on-rails'
 
 gem 'bootstrap-sass'
 
-gem 'sonos'
+gem 'sonos', github: 'gotwalt/sonos'
 
 gem 'sidekiq'
 gem 'sinatra'
