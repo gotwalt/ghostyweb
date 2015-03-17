@@ -9,11 +9,11 @@ gem 'rack-timeout'
 # Unicorny web server
 gem 'unicorn'
 
-gem 'jquery-rails'
+gem 'jquery-rails', '4.0.3'
 
-gem 'backbone-on-rails'
+gem 'backbone-on-rails', '1.1.2.0'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '3.3.4'
 
 gem 'sonos', github: 'soffes/sonos'
 
