@@ -20,7 +20,7 @@ class GhostWorker
       track = random_track(options['sound'])
 
       # prevent competition for the speaker
-      Redis::Mutex.with_lock(speaker.uid) do
+      RedisMutex.with_lock(speaker.uid) do
         results = speaker.voiceover!(track, volume)
         Log.create(speaker_uid: speaker.uid, speaker_name: speaker.name, audio_uri: track, volume: volume, original_volume: results[:original_volume], duration: results[:duration], original_state: results[:original_state])
       end

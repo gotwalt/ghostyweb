@@ -1,3 +1,5 @@
+require 'sidekiq/api'
+
 class GhostSchedulerWorker
   include Sidekiq::Worker
   FREQUENCY = 45

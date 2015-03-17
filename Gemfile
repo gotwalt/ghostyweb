@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
-
 # Rails
-gem 'rails', '4.1'
+gem 'rails', '4.2'
 
 gem 'sqlite3'
 
@@ -17,7 +15,7 @@ gem 'backbone-on-rails'
 
 gem 'bootstrap-sass'
 
-gem 'sonos', github: 'gotwalt/sonos'
+gem 'sonos', github: 'soffes/sonos'
 
 gem 'sidekiq'
 gem 'sinatra'
